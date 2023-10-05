@@ -55,4 +55,3 @@ Problem statement can be found [here](https://codu.ai/coding-problem/mymoney)
 * Main class, Command line class, dtos, config, constants etc are excluded from coverage. 
 * Code coverage is 70+.
 
-# Happy coding!!
