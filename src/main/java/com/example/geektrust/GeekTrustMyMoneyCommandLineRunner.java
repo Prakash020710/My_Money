@@ -43,6 +43,9 @@ public class GeekTrustMyMoneyCommandLineRunner implements CommandLineRunner{
 		} catch (GeektrustException e) {
 			logger.log(Level.ERROR, e.getMessage());
 			System.out.println(e.getMessage());
+		}catch (Exception e) {
+			logger.log(Level.ERROR, e.getMessage());
+			System.out.println("Failed to process file!");
 		}
 		System.exit(0);
 	}
