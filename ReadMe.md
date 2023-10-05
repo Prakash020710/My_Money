@@ -47,10 +47,12 @@ Problem statement can be found [here](https://codu.ai/coding-problem/mymoney)
 * File commands are expected in order, for example ALLOCATE should come first before SIP or CHANGE, else processing will fail with message : Failed to process file!
 
 # Limitations/Obervations
-* Spring boot is not required or used much in solution, its used to make solution as per enterprise solutions/ codebase. Also SPring comes with fetaure like Dependency injection.
+* Spring boot is not required or used much in solution, its used to make solution as per enterprise solutions/ codebase. Also Spring comes with fetaure like Dependency injection.
 * Gradle version used is old as per instructions, latest like 8x should be used.
 * Some tests are only for code coverage however its still useful as it will test the solution is not throwing error and processing supplied input.
 
 # Code coverage
 * Main class, Command line class, dtos, config, constants etc are excluded from coverage. 
 * Code coverage is 70+.
+
+# Happy coding!!
