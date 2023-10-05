@@ -42,9 +42,9 @@ You can read build instructions [here](https://github.com/geektrust/coding-probl
 Problem statement can be found [here](https://codu.ai/coding-problem/mymoney)
 
 # Assumptions
-Assumptions are as per the problem statement
-Rounding can impact the expacted result with 1,2 digits
-File commands are expected in order, for example ALLOCATE should come first before SIP or CHANGE, else processing will fail with message : Failed to process file!
+* Assumptions are as per the problem statement
+* Rounding can impact the expacted result with 1,2 digits
+* File commands are expected in order, for example ALLOCATE should come first before SIP or CHANGE, else processing will fail with message : Failed to process file!
 
 # Limitations/Obervations
 1.> Gradle version used is old as per instructions, latest like 8x should be used.
@@ -52,5 +52,5 @@ File commands are expected in order, for example ALLOCATE should come first befo
 3.> Some tests are only for code coverage however its still useful as it will test the solution is not throwing error and processing supplied input.
 
 # Code coverage
-Main class, Command line class, dtos, config, constants etc are excluded from coverage. 
-Code coverage is 70+.
+* Main class, Command line class, dtos, config, constants etc are excluded from coverage. 
+* Code coverage is 70+.
