@@ -23,6 +23,7 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import com.example.geektrust.exception.GeektrustException;
 import com.example.geektrust.model.dto.DataModel;
+import com.example.geektrust.model.ref.FundType;
 
 /**
  * @author : Prakash Karki
@@ -58,6 +59,24 @@ public class GeekTrustMyMoneyCommandProcessorTest {
 	}
 
 	@Test
+	public void test_Balance_With_Valid_Data() throws GeektrustException {
+
+		String[] args = new String[] {"ALLOCATE", "6000", "3000", "1000"};
+		geekTrustMyMoneyCommandProcessor.allocate(args);
+
+		String[] args1 = new String[] {"CHANGE", "4.00%", "4.00%", "4.00%", "JANUARY"};
+
+		geekTrustMyMoneyCommandProcessor.change(args1);	
+
+		String[] args2 = new String[] {"BALANCE", "JANUARY"};
+
+		geekTrustMyMoneyCommandProcessor.balance(args2);
+
+		assertTrue(dataModel.getMonthlyPortfolio().get(Month.JANUARY) != null);
+	}
+
+
+	@Test
 	public void test_Balance_With_Valid_Data_Failed() {
 
 		String[] args = new String[] {"BALANCE", "MARCH"};
@@ -70,6 +89,10 @@ public class GeekTrustMyMoneyCommandProcessorTest {
 
 	@Test
 	public void test_Change_With_Valid_Data() {
+		
+		dataModel.getFundOrder().add(FundType.EQUITY);
+		dataModel.getFundOrder().add(FundType.DEBT);
+		dataModel.getFundOrder().add(FundType.GOLD);
 
 		String[] args = new String[] {"ALLOCATE", "6000", "3000", "1000"};
 		geekTrustMyMoneyCommandProcessor.allocate(args);
@@ -83,7 +106,11 @@ public class GeekTrustMyMoneyCommandProcessorTest {
 	}
 
 	@Test
-	public void test_Full_Operation_Success_With_Rebalance() {
+	public void test_Full_Operation_Success_With_Rebalance_1() {
+		
+		dataModel.getFundOrder().add(FundType.EQUITY);
+		dataModel.getFundOrder().add(FundType.DEBT);
+		dataModel.getFundOrder().add(FundType.GOLD);
 
 		String[] args1 = new String[] {"ALLOCATE", "6000", "3000", "1000"};
 		geekTrustMyMoneyCommandProcessor.allocate(args1);
@@ -95,6 +122,26 @@ public class GeekTrustMyMoneyCommandProcessorTest {
 		geekTrustMyMoneyCommandProcessor.change(args3);
 
 		String[] args4 = new String[] {"CHANGE", "3.00%", "8.00%", "5.00%", "JUNE"};
+		geekTrustMyMoneyCommandProcessor.change(args4);
+
+		geekTrustMyMoneyCommandProcessor.reBalance();
+
+		assertTrue(dataModel.getMonthlyPortfolio().get(Month.JANUARY) != null);
+	}
+
+	@Test
+	public void test_Full_Operation_Success_With_Rebalance_2() {
+
+		String[] args1 = new String[] {"ALLOCATE", "6000", "3000", "1000"};
+		geekTrustMyMoneyCommandProcessor.allocate(args1);
+
+		String[] args2 = new String[] {"SIP", "2000", "1000", "500"};
+		geekTrustMyMoneyCommandProcessor.sip(args2);
+
+		String[] args3 = new String[] {"CHANGE", "4.00%", "10.00%", "2.00%", "JANUARY"};
+		geekTrustMyMoneyCommandProcessor.change(args3);
+
+		String[] args4 = new String[] {"CHANGE", "3.00%", "8.00%", "5.00%", "DECEMBER"};
 		geekTrustMyMoneyCommandProcessor.change(args4);
 
 		geekTrustMyMoneyCommandProcessor.reBalance();
@@ -121,7 +168,5 @@ public class GeekTrustMyMoneyCommandProcessorTest {
 
 		assertTrue(dataModel.getMonthlyPortfolio().get(Month.JANUARY) != null);
 	}
-
-
 }
 

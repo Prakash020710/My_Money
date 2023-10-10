@@ -50,7 +50,7 @@ public class GeekTrustMyMoneyServiceTest {
 	private GeekTrustMyMoneyService geekTrustMyMoneyService;
 
 	@Test
-	public void test_ProcessCommands_With_Invalid_Data() {
+	public void test_ProcessCommands_With_Invalid_Data_Fail() {
 
 		String[] args = new String[] {"test1", "test2"};
 		try {
@@ -61,7 +61,7 @@ public class GeekTrustMyMoneyServiceTest {
 	}
 
 	@Test
-	public void test_ProcessCommands_With_Null() {
+	public void test_ProcessCommands_With_Blank_Fail() {
 
 		String[] args = new String[] {};
 		try {
@@ -70,16 +70,27 @@ public class GeekTrustMyMoneyServiceTest {
 			assertTrue(e.getMessage().equals("No input arguments were supplied!"));
 		}
 	}
+	
+	@Test
+	public void test_ProcessCommands_With_Invalid_File_Path_Fail() {
+
+		String[] args = new String[] {"test"};
+		try {
+			geekTrustMyMoneyService.processCommandsFromFile(args);
+		} catch (GeektrustException e) {
+			assertTrue(e.getMessage().equals("Error in parsing file"));
+		}
+	}
 
 	@Test
-	public void test_ProcessCommands_With_Input() throws URISyntaxException, GeektrustException {
+	public void test_ProcessCommands_With_Input_Success() throws URISyntaxException, GeektrustException {
 
 		Mockito.doNothing().when(processor).allocate(Mockito.any());
 		Mockito.doNothing().when(processor).balance(Mockito.any());
 		Mockito.doNothing().when(processor).change(Mockito.any());
 		Mockito.doNothing().when(processor).sip(Mockito.any());
 		Mockito.doNothing().when(processor).reBalance();
-		URL resource = GeekTrustMyMoneyServiceTest.class.getResource("/input.txt");
+		URL resource = GeekTrustMyMoneyServiceTest.class.getResource("/input1.txt");
 		File f =Paths.get(resource.toURI()).toFile();
 		String[] args = new String[] {f.getAbsolutePath()};
 		geekTrustMyMoneyService.processCommandsFromFile(args);
@@ -93,5 +104,45 @@ public class GeekTrustMyMoneyServiceTest {
 		 * # Recommended not to use such pattern!
 		 */
 		assertTrue(dataModel.getMonthlyPortfolio() != null);
+	}
+	
+
+	@Test
+	public void test_ProcessCommands_With_Invalid_Command_Fail() throws URISyntaxException, GeektrustException {
+
+		URL resource = GeekTrustMyMoneyServiceTest.class.getResource("/input2.txt");
+		File f =Paths.get(resource.toURI()).toFile();
+		String[] args = new String[] {f.getAbsolutePath()};
+		try {
+			geekTrustMyMoneyService.processCommandsFromFile(args);
+		} catch (GeektrustException e) {
+			assertTrue(e.getMessage().equals("Invalid command or input supplied is incorrect!"));
+		}
+	}
+	
+	@Test
+	public void test_ProcessCommands_With_Invalid_Command_Data_Fail() throws URISyntaxException, GeektrustException {
+
+		URL resource = GeekTrustMyMoneyServiceTest.class.getResource("/input3.txt");
+		File f =Paths.get(resource.toURI()).toFile();
+		String[] args = new String[] {f.getAbsolutePath()};
+		try {
+			geekTrustMyMoneyService.processCommandsFromFile(args);
+		} catch (GeektrustException e) {
+			assertTrue(e.getMessage().equals("Invalid command or input supplied is incorrect!"));
+		}
+	}
+	
+	@Test
+	public void test_ProcessCommands_With_Invalid_Command_Blank_Data_Fail() throws URISyntaxException, GeektrustException {
+
+		URL resource = GeekTrustMyMoneyServiceTest.class.getResource("/input4.txt");
+		File f =Paths.get(resource.toURI()).toFile();
+		String[] args = new String[] {f.getAbsolutePath()};
+		try {
+			geekTrustMyMoneyService.processCommandsFromFile(args);
+		} catch (GeektrustException e) {
+			assertTrue(e.getMessage().equals("Invalid command or input supplied is incorrect!"));
+		}
 	}
 }
