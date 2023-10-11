@@ -52,6 +52,6 @@ Problem statement can be found [here](https://codu.ai/coding-problem/mymoney)
 * Some tests are only for code coverage however its still useful as it will test the solution is not throwing error and processing supplied input.
 
 # Code coverage
-* Main class, Command line class, dtos, config, constants etc are excluded from coverage. 
-* Code coverage is 70+.
+* Main class, Command line class, dtos, config, constants etc are excluded from coverage as standard practice.
+* Code coverage is 99%.
 
