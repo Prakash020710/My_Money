@@ -70,7 +70,7 @@ public class GeekTrustMyMoneyService {
 	 * @param filename
 	 * @throws GeektrustException
 	 */
-	public void processFile(String filename) throws GeektrustException {
+	private void processFile(String filename) throws GeektrustException {
 
 		Stream<String> lines = null;
 		List<String> outputs = null;
@@ -100,8 +100,6 @@ public class GeekTrustMyMoneyService {
 			throw new GeektrustException(CommonConstants.GTMM_005, ErrorConfig.string(CommonConstants.GTMM_005));
 		}
 		int size = dataModel.getFundOrder().size();
-		if(size == 0)
-			size = 3;
 		switch(command) {
 		case ALLOCATE:
 			validate(commandAndInputs, size);
@@ -122,8 +120,6 @@ public class GeekTrustMyMoneyService {
 			validate(commandAndInputs, size);
 			processor.sip(commandAndInputs);
 			break;
-		default:
-			throw new GeektrustException(CommonConstants.GTMM_005, ErrorConfig.string(CommonConstants.GTMM_005));
 		}
 	}
 

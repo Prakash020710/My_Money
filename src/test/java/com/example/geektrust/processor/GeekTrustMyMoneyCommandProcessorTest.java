@@ -16,6 +16,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.time.Month;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Spy;
@@ -33,7 +34,6 @@ import com.example.geektrust.model.ref.FundType;
 @SpringJUnitConfig
 public class GeekTrustMyMoneyCommandProcessorTest {
 
-
 	@Spy 
 	private DataModel dataModel;
 
@@ -41,6 +41,12 @@ public class GeekTrustMyMoneyCommandProcessorTest {
 	@InjectMocks
 	private GeekTrustMyMoneyCommandProcessor geekTrustMyMoneyCommandProcessor;
 
+	@BeforeEach
+	void setup(){
+		dataModel.getFundOrder().add(FundType.EQUITY);
+		dataModel.getFundOrder().add(FundType.DEBT);
+		dataModel.getFundOrder().add(FundType.GOLD);
+	}
 
 	@Test
 	public void test_Allocate_With_Valid_Data() {
@@ -89,10 +95,6 @@ public class GeekTrustMyMoneyCommandProcessorTest {
 
 	@Test
 	public void test_Change_With_Valid_Data() {
-		
-		dataModel.getFundOrder().add(FundType.EQUITY);
-		dataModel.getFundOrder().add(FundType.DEBT);
-		dataModel.getFundOrder().add(FundType.GOLD);
 
 		String[] args = new String[] {"ALLOCATE", "6000", "3000", "1000"};
 		geekTrustMyMoneyCommandProcessor.allocate(args);
@@ -107,10 +109,6 @@ public class GeekTrustMyMoneyCommandProcessorTest {
 
 	@Test
 	public void test_Full_Operation_Success_With_Rebalance_1() {
-		
-		dataModel.getFundOrder().add(FundType.EQUITY);
-		dataModel.getFundOrder().add(FundType.DEBT);
-		dataModel.getFundOrder().add(FundType.GOLD);
 
 		String[] args1 = new String[] {"ALLOCATE", "6000", "3000", "1000"};
 		geekTrustMyMoneyCommandProcessor.allocate(args1);

@@ -105,8 +105,6 @@ public class GeekTrustMyMoneyCommandProcessor {
 	 */
 	public void change(String[] commandAndInputs) {
 
-		if(size == 0)
-			size = 3;
 		List<Double> rates = Arrays.stream(commandAndInputs).skip(1).limit(size).
 				map(str -> Double.parseDouble(str.replace("%", ""))).collect(Collectors.toList());
 		Month currentMonth = Month.valueOf(commandAndInputs[size + 1]);

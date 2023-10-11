@@ -30,6 +30,7 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import com.example.geektrust.exception.GeektrustException;
 import com.example.geektrust.model.dto.DataModel;
+import com.example.geektrust.model.ref.FundType;
 import com.example.geektrust.processor.GeekTrustMyMoneyCommandProcessor;
 
 /**
@@ -49,6 +50,13 @@ public class GeekTrustMyMoneyServiceTest {
 	@InjectMocks
 	private GeekTrustMyMoneyService geekTrustMyMoneyService;
 
+	@BeforeEach
+	void setup(){
+		dataModel.getFundOrder().add(FundType.EQUITY);
+		dataModel.getFundOrder().add(FundType.DEBT);
+		dataModel.getFundOrder().add(FundType.GOLD);
+	}
+	
 	@Test
 	public void test_ProcessCommands_With_Invalid_Data_Fail() {
 
